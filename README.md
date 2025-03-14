@@ -1,2 +1,2 @@
-# javago
+# java
 java的练习
