@@ -10,15 +10,16 @@ import java.util.Properties;
 public class JDBCUtils {
 
     private static DataSource ds;
+
     static {
-        Properties pro = new Properties();
         try {
+            Properties pro = new Properties();
             pro.load(JDBCUtils.class.getClassLoader().getResourceAsStream("druid.properties"));
             ds = DruidDataSourceFactory.createDataSource(pro);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -26,31 +27,6 @@ public class JDBCUtils {
         return ds.getConnection();
     }
 
-    public static void close(ResultSet rs, PreparedStatement pstmt, Connection conn){
-        if (rs != null){
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        if (pstmt != null){
-            try {
-                pstmt.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        if (conn != null){
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
-    public static void close( PreparedStatement pstmt,Connection conn) {
-        close(null,pstmt, conn);
-    }
+    //在异常处理中用了try-with-resources
 }

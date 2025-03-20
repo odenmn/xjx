@@ -11,6 +11,8 @@ public class RegisterAndLoginController {
     UserService userService = new UserService();
     StudentService studentService =new StudentService();
     Scanner sc = new Scanner(System.in);
+
+    //注册
     public void register(){
         System.out.println("请输入用户名：");
         String username = sc.next();
@@ -38,7 +40,6 @@ public class RegisterAndLoginController {
         }
         User user = new User(username,password,role);
         user = userService.registerUser(user);//在users表中插入新数据并返回此user的全部信息
-        //user = userService.getUserByUsername(username);//为了得到user的id
         if (user.getRole().equals("学生")) {
             Student student = new Student(user.getId(), username, phone);
             studentService.addStudent(student);//在students表中插入新数据
@@ -48,6 +49,7 @@ public class RegisterAndLoginController {
     }
 
 
+    //登录
     public User Login(){
         System.out.println("请输入用户名：");
         String username = sc.nextLine();

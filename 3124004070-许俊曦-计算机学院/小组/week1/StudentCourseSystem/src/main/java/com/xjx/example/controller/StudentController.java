@@ -58,9 +58,9 @@ public class StudentController {
         List<Course> availbleCourses = courseService.getAllCourses();
         System.out.println("======可选课程列表=====");
         for (Course course:availbleCourses) {
-            System.out.println("课程ID：" + course.getCourseId() + "|| 课程名称：" + course.getCourseName() +
-                            "|| 课程学分：" + course.getCredit() + "|| 授课老师：" + course.getTeacher() +
-                            "|| 课程描述：" + course.getDescription()
+            System.out.println("课程ID：" + course.getCourseId() + " || 课程名称：" + course.getCourseName() +
+                            " || 课程学分：" + course.getCredit() + " || 授课老师：" + course.getTeacher() +
+                            " || 课程描述：" + course.getDescription()
                     );
         }
     }
@@ -80,7 +80,7 @@ public class StudentController {
             System.out.println("你已选满 5 门课程，不能再选。");
             return;
         }
-        studentCourseSelectionService.addStudentCourse(new StudentCourseSelection(studentId, courseId));
+        studentCourseSelectionService.addStudentCourse(studentId, courseId);
         System.out.println("选课成功");
     }
 
@@ -92,9 +92,9 @@ public class StudentController {
         for (StudentCourseSelection scs : selectedCourses) {
             Course course = courseService.getCoursesById(scs.getCourseId());
             if (course != null) {
-                System.out.println("课程ID：" + course.getCourseId() + "|| 课程名称：" + course.getCourseName() +
-                        "|| 课程学分：" + course.getCredit() + "|| 授课老师：" + course.getTeacher() +
-                        "|| 课程描述：" + course.getDescription()
+                System.out.println("课程ID：" + course.getCourseId() + " || 课程名称：" + course.getCourseName() +
+                        " || 课程学分：" + course.getCredit() + " || 授课老师：" + course.getTeacher() +
+                        " || 课程描述：" + course.getDescription()
                 );
             }
         }

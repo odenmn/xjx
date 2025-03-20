@@ -11,25 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users";
-        try (Connection conn = JDBCUtils.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                int userId = rs.getInt("user_id");
-                String userName = rs.getString("username");
-                String password = rs.getString("password");
-                String role = rs.getString("role");
-                users.add(new User(userId, userName, password, role));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
 
+
+    //通过用户名查询用户
     public User getUserByUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
         try {
@@ -50,6 +34,9 @@ public class UserDao {
         }
         return null;
     }
+
+
+    //注册新用户
     public User registerUser(User user) {
         String sql = "INSERT INTO users (username, password, role) VALUES (?,?,?)";
         try (Connection conn = JDBCUtils.getConnection();
@@ -58,6 +45,7 @@ public class UserDao {
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getRole());
             pstmt.executeUpdate();
+            //返回含有userId的User对象
             return getUserByUsername(user.getUsername());
             } catch (SQLException e) {
                 e.printStackTrace();

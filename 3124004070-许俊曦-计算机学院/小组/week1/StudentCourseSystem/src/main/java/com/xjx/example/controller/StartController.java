@@ -2,6 +2,7 @@ package com.xjx.example.controller;
 
 import com.xjx.example.entity.Student;
 import com.xjx.example.entity.User;
+import com.xjx.example.service.StudentService;
 
 import javax.jws.Oneway;
 import java.util.Scanner;
@@ -30,8 +31,8 @@ public class StartController {
                     }
                     if (user.getRole().equals("学生")) {
                         //身份为学生
-                        Student student = new Student();
-                        student.setStudentId(user.getId());
+                        StudentService studentService = new StudentService();
+                        Student student = studentService.getstudentByName(user.getUsername());
                         studentController.showStudentMenu(student);
                     }else {
                         //身份为管理员
