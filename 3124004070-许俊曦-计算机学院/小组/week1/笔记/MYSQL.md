@@ -59,7 +59,7 @@ score double(总长度,小数点后保留的位数)    score double(5.2)
 
 3.字符串
 
-![img](https://ncnwfcsxrcte.feishu.cn/space/api/box/stream/download/asynccode/?code=ZjFmMzEzOTFkOGVmNTAxNWU1MzllZDM5NjUxYmQ3NGVfRVdvblBRVXRvV3lGS0VWR0RtbjRjYlpKTVpoU0dSNFBfVG9rZW46Q0xRU2JIa3BMb25VaGl4VWhxd2NFbGtXblhnXzE3NDIwMDQ5MDk6MTc0MjAwODUwOV9WNA) 
+![img](MYSQL.assets/17425510622871.png) 
 
 #### 操作
 
