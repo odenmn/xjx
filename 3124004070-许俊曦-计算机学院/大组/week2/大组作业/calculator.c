@@ -206,7 +206,7 @@ int main(){
     char postfix[100];
     printf("请输入一个四则运算表达式：");
     fgets(infix, sizeof(infix), stdin);
-    infix[strcspn(infix, "\n")] = 0;  // 去除换行符
+    infix[strcspn(infix, "\n")] = '\0';  // 去除换行符
 
     infixTranslation(infix, postfix);
     printf("后缀表达式为：%s\n", postfix);
