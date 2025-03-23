@@ -188,7 +188,9 @@ double calculatePostfix(char *postfix){
         if (isnumber(postfix[i]))
         {
             //当前字符为数字
-            push(&values,postfix[i] - '0');
+            //将数字字符进行类型转换
+            double num = postfix[i] - '0';
+            push(&values,num);
         } else {
             //当前字符为运算符
             double value2 = pop(&values);
