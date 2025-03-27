@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录/注册</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- 表单容器，用于包裹登录和注册表单及相关元素 -->
+        <div class="container">
+            <!-- 包含登录和注册切换按钮的容器 -->
+            <div class="tab-buttons">
+                <!-- 登录按钮。使用动态类绑定，当 isLoginTab 为 true 时添加 active 类 -->
+                <!-- 点击按钮时，将 isLoginTab 设置为 true，以显示登录表单 -->
+                <button :class="{ active: isLoginTab }" @click="isLoginTab = true">登录</button>
+                <!-- 注册按钮。使用动态类绑定，当 isLoginTab 为 false 时添加 active 类 -->
+                <!-- 点击按钮时，将 isLoginTab 设置为 false，以显示注册表单 -->
+                <button :class="{ active: !isLoginTab }" @click="isLoginTab = false">注册</button>
+            </div>
+            <!-- 表单元素，使用 @submit.prevent 阻止表单默认提交行为，转而执行 submitForm 方法，这样就可以看到控制台中的提交信息 -->
+            <form @submit.prevent="submitForm">
+                <!-- v-if 指令，当 isLoginTab 为 true 时，显示登录表单 -->
+                <div v-if="isLoginTab">
+                    <!-- 表单组，包含邮箱输入框及相关提示 -->
+                    <div class="form-group">
+                        <!-- 邮箱输入框的标签 -->
+                        <label for="loginEmail">邮箱</label>
+                        <!-- 邮箱输入框，使用 v-model 进行双向数据绑定，绑定到 loginEmail 数据属性 -->
+                        <!-- required 属性表示该输入框为必填项 -->
+                        <input type="email" id="loginEmail" v-model="loginEmail" required>
+                        <!-- 错误提示信息，当邮箱输入为空，表单已提交且当前为登录表单时显示 -->
+                        <div class="error" v-if="!loginEmail && submitted && isLoginTab">邮箱是必填项</div>
+                    </div>
+                    <!-- 表单组，包含密码输入框及相关提示 -->
+                    <div class="form-group">
+                        <!-- 密码输入框的标签 -->
+                        <label for="loginPassword">密码</label>
+                        <!-- 密码输入框，使用 v-model 进行双向数据绑定，绑定到 loginPassword 数据属性 -->
+                        <!-- required 属性表示该输入框为必填项 -->
+                        <input type="password" id="loginPassword" v-model="loginPassword" required>
+                        <!-- 错误提示信息，当密码输入为空，表单已提交且当前为登录表单时显示 -->
+                        <div class="error" v-if="!loginPassword && submitted && isLoginTab">密码是必填项</div>
+                    </div>
+                </div>
+                
+                <!-- v-else 指令，当 isLoginTab 为 false 时，显示注册表单 -->
+                <div v-else>
+                    <!-- 表单组，包含注册邮箱输入框及相关提示 -->
+                    <div class="form-group">
+                        <!-- 注册邮箱输入框的标签 -->
+                        <label for="registerEmail">邮箱</label>
+                        <!-- 注册邮箱输入框 -->
+                        <input type="email" id="registerEmail" v-model="registerEmail" required>
+                        <!-- 错误提示信息，当注册邮箱输入为空，表单已提交且当前为注册表单时显示 -->
+                        <div class="error" v-if="!registerEmail && submitted &&!isLoginTab">邮箱是必填项</div>
+                    </div>
+                    <!-- 表单组，包含注册手机号输入框及相关提示 -->
+                    <div class="form-group">
+                        <!-- 注册手机号输入框的标签 -->
+                        <label for="registerPhone">手机号</label>
+                        <!-- 注册手机号输入框，使用 v-model 进行双向数据绑定，绑定到 registerPhone 数据属性 -->
+                        <!-- required 属性表示该输入框为必填项 -->
+                        <input type="tel" id="registerPhone" v-model="registerPhone" required>
+                        <!-- 错误提示信息，当注册手机号输入为空，表单已提交且当前为注册表单时显示 -->
+                        <div class="error" v-if="!registerPhone && submitted &&!isLoginTab">手机号是必填项</div>
+                    </div>
+                    <!-- 表单组，包含注册密码输入框及相关提示 -->
+                    <div class="form-group">
+                        <!-- 注册密码输入框的标签 -->
+                        <label for="registerPassword">密码</label>
+                        <!-- 注册密码输入框 -->
+                        <input type="password" id="registerPassword" v-model="registerPassword" required>
+                        <!-- 错误提示信息，当注册密码输入为空，表单已提交且当前为注册表单时显示 -->
+                        <div class="error" v-if="!registerPassword && submitted &&!isLoginTab">密码是必填项</div>
+                    </div>
+                    <!-- 表单组，包含确认密码输入框及相关提示 -->
+                    <div class="form-group">
+                        <!-- 确认密码输入框的标签 -->
+                        <label for="confirmPassword">确认密码</label>
+                        <!-- 确认密码输入框 -->
+                        <input type="password" id="confirmPassword" v-model="confirmPassword" required>
+                        <!-- 错误提示信息，当确认密码输入为空，表单已提交且当前为注册表单时显示 -->
+                        <div class="error" v-if="!confirmPassword && submitted &&!isLoginTab">确认密码是必填项</div>
+                        <!-- 错误提示信息，当两次输入的密码不一致，表单已提交且当前为注册表单时显示 -->
+                        <div class="error" v-if="registerPassword!== confirmPassword && submitted &&!isLoginTab">两次输入的密码不一致</div>
+                    </div>
+                </div>
+                <!-- 提交按钮，按钮文本根据 isLoginTab 的值动态显示为“登录”或“注册” -->
+                <button type="submit">{{ isLoginTab? '登录' : '注册' }}</button>
+            </form>
+        </div>
+    </div>
+    <!-- 引入 Vue 2 库，版本为 2.6.14 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            
+            data: {
+                // 当前是否显示登录表单，初始值为 true
+                isLoginTab: true,
+                // 登录时输入的邮箱，初始为空字符串
+                loginEmail: '',
+                // 登录时输入的密码，初始为空字符串
+                loginPassword: '',
+                // 注册时输入的邮箱，初始为空字符串
+                registerEmail: '',
+                // 注册时输入的手机号，初始为空字符串
+                registerPhone: '',
+                // 注册时输入的密码，初始为空字符串
+                registerPassword: '',
+                // 注册时确认的密码，初始为空字符串
+                confirmPassword: '',
+                // 表单是否已提交
+                submitted: false
+            },
+            methods: {
+                submitForm() {
+                    // 标记表单已提交
+                    this.submitted = true;
+                    // 如果当前显示的是登录表单
+                    if (this.isLoginTab) {
+                        // 当邮箱和密码都不为空时，打印登录成功信息
+                        if (this.loginEmail && this.loginPassword) {
+                            console.log('登录成功:', this.loginEmail, this.loginPassword);
+                        }
+                    } else {
+                        // 如果当前显示的是注册表单
+                        // 当注册邮箱、手机号、密码都不为空且两次输入的密码一致时，打印注册成功信息
+                        if (this.registerEmail && this.registerPhone && this.registerPassword && this.registerPassword === this.confirmPassword) {
+                            console.log('注册成功:', this.registerEmail, this.registerPhone, this.registerPassword);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>    
